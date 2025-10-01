@@ -1,0 +1,20 @@
+yuno-miles-coder/
+├── pyproject.toml                 # 패키지/CLI 설정
+├── README.md                      # (Yuno Miles 톤) 소개 문서
+├── LICENSE                        # 공식 MIT
+├── .env.example                   # 환경변수 예시
+├── examples/
+│   └── hello.py                   # 샘플 코드
+├── build/                         # (비공개로 두는게 보통) 인덱스 팩 빌더
+│   └── build_pack.py              # 원문 → .ymcpack 생성 스크립트
+└── app/
+    ├── cli.py                     # CLI 엔트리포인트 (MODE=hybrid)
+    ├── llm.py                     # OpenAI 호환 클라이언트
+    ├── persona.py                 # 페르소나 프롬프트
+    ├── formatter.py               # bleep 필터
+    ├── cache.py                   # JSONL 캐시(~/.coderoast/)
+    ├── redact.py                  # (옵션) AST 비식별 JSON 추출
+    ├── cloud_explain.py           # 클라우드: 중립 설명
+    ├── local_style.py             # 로컬 7B: 스타일 변환
+    ├── snippets_db.py             # SQLite 스니펫 DB(seed 포함)
+    └── pack_loader.py             # (신규) .ymcpack 로더 + 검색 유틸
