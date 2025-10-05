@@ -8,4 +8,4 @@ def greet(name):
 if __name__ == "__main__":
     result = add(2, 5)
     print("Sum is:", result)
-    greet("Yuno Miles")
+    greet("Bitch")

@@ -46,6 +46,7 @@ HELLO WORLD? NAH, HELLO UNIVERSE 🚀🚀🚀
    - **Persona:** Change the personality with the `--persona` flag. Default is `chaotic_microblog`.
      ```sh
      python -m app.cli examples/hello.py --persona yuno_miles
+     python -m app.cli examples/hello.py --persona kanye_twitter
      ```
    - **Snippets:** Add your own jokes to `~/.coderoast/snippets.jsonl`.
    - **Packs:** For advanced snippet management, you can build `.ymcpack` archives.
