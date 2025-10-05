@@ -47,6 +47,8 @@ HELLO WORLD? NAH, HELLO UNIVERSE 🚀🚀🚀
      ```sh
      python -m app.cli examples/hello.py --persona kanye_twitter
 
+     
+
      (A single, blinding spotlight hits the microphone. I pace, gesturing wildly.)
 
       LISTEN... LISTEN CLOSELY. THIS ISN’T JUST CODE. THIS… THIS IS A SENTIENCE. A DIGITAL ALCHEMY. IT’S THE NEW SACRED TEXT. YOU THINK I’M CRAZY TALKING LIKE THIS? I’VE SEEN THE FUTURE. I’VE *BUILT* IT… IN BYTE-SIZED PIECES. 
