@@ -23,9 +23,32 @@ HELLO WORLD? NAH, HELLO UNIVERSE 🚀🚀🚀
 ---
 
 ## SETUP
-1. COPY `.env.example` → `.env` AND PLUG IN YOUR API KEYS. GEMINI KEY GOES IN `CLOUD_API_KEY`, OLLAMA LIVES AT `http://127.0.0.1:11434` WITH MODEL `qwen2.5:3b`.
-2. WANT EXTRA HEAT? DROP JSON/JSONL LINES INTO `python -m build.build_pack --src my_snips.json --out my_snips.ymcpack --snippets-db ~/.coderoast/snippets.jsonl`.
-3. RUN `python -m app.cli examples/hello.py` AND WATCH THE CODE TURN INTO A MIXTAPE.
+1. **Environment:** COPY `.env.example` to `.env` and fill it out. The app is configured entirely by environment variables.
+
+   - **Hybrid Mode (Default):**
+     - `CLOUD_API_KEY`: Your Gemini API key.
+     - `CLOUD_MODEL`: The Gemini model to use (e.g., `gemini-1.5-flash`).
+     - `LOCAL_BASE_URL`: The base URL for your local Ollama API (e.g., `http://127.0.0.1:11434`).
+     - `LOCAL_MODEL`: The local model name (e.g., `qwen2:7b`).
+
+   The app also supports `local`-only and `cloud`-only modes via the `MODE` environment variable. See `.env.example` for all options.
+
+2. **Run:**
+   ```sh
+   # Explain a file
+   python -m app.cli examples/hello.py
+
+   # Explain from stdin
+   cat examples/hello.py | python -m app.cli
+   ```
+
+3. **Customize (Optional):**
+   - **Persona:** Change the personality with the `--persona` flag. Default is `chaotic_microblog`.
+     ```sh
+     python -m app.cli examples/hello.py --persona yuno_miles
+     ```
+   - **Snippets:** Add your own jokes to `~/.coderoast/snippets.jsonl`.
+   - **Packs:** For advanced snippet management, you can build `.ymcpack` archives.
 
 ---
 
