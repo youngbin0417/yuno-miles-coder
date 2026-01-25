@@ -1,0 +1,13 @@
+# Core
+requests>=2.31.0
+python-dotenv>=1.0.1
+pyarrow>=15.0.0
+
+# API Server
+fastapi>=0.109.0
+uvicorn>=0.27.0
+gunicorn>=21.2.0
+pydantic>=2.0.0
+
+# LLM & Utility
+openai>=1.0.0  # Optional, for OpenAI-compatible LLM clients if needed
