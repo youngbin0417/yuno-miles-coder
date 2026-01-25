@@ -48,7 +48,7 @@ def load_pack(path: Optional[str]) -> Optional[dict]:
     return {"meta": meta, "items": items}
 
 
-def pack_search(pack: dict | None, query: str, k: int = 4) -> Tuple[list[dict], list[float]]:
+def pack_search(pack: Optional[dict], query: str, k: int = 4) -> Tuple[list[dict], list[float]]:
     """Return items whose combined title/body best match the query string."""
 
     if not pack or not query.strip():
