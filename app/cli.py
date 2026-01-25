@@ -1,10 +1,11 @@
 import os, sys, argparse
+from typing import Optional
 from dotenv import load_dotenv
 from .pack_loader import load_pack
 from .persona import list_personas
 from .engine import get_engine_response
 
-def _read_code(path: str | None, max_lines: int) -> str:
+def _read_code(path: Optional[str], max_lines: int) -> str:
     if path:
         with open(path, "r", encoding="utf-8", errors="ignore") as f:
             txt = f.read()

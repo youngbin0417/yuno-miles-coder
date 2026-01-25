@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, Iterable
+from typing import Any, Dict, Iterable, Optional
 
 import requests
 
@@ -42,9 +42,9 @@ def chat(
     system: str,
     user: str,
     *,
-    base_url: str | None = None,
-    model: str | None = None,
-    api_key: str | None = None,
+    base_url: Optional[str] = None,
+    model: Optional[str] = None,
+    api_key: Optional[str] = None,
 ) -> str:
     base = base_url or os.getenv("LLM_BASE_URL") or DEFAULT_BASE
     model = model or os.getenv("LLM_MODEL") or ""

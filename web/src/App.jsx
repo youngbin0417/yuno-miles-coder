@@ -6,7 +6,7 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Sparkles, Terminal, Cpu, RefreshCcw, Send, Copy, Check, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = '/api';
 
 const CodeBlock = ({ language, children }) => {
   const [copied, setCopied] = useState(false);

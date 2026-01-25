@@ -1,10 +1,10 @@
 import json
 from difflib import SequenceMatcher
 from pathlib import Path
-from typing import Any, Tuple
+from typing import Any, Tuple, Optional
 
 
-def load_pack(path: str | None) -> dict | None:
+def load_pack(path: Optional[str]) -> Optional[dict]:
     """Load a .ymcpack archive from disk.
 
     The format is a zip archive containing:
