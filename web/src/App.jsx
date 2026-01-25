@@ -109,67 +109,57 @@ function App() {
         </header>
 
         <main className="space-y-12">
-          {/* Input Section */}
+          {/* Input Section - Minimal Editor Style */}
           <section className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-3xl blur opacity-10 group-focus-within:opacity-25 transition duration-1000"></div>
-            <div className="relative bg-zinc-900 rounded-3xl border border-zinc-800 shadow-2xl overflow-hidden flex flex-col">
-              {/* Toolbar */}
-              <div className="flex items-center justify-between p-4 border-b border-zinc-800 bg-zinc-900/50 backdrop-blur-sm z-10">
-                <div className="flex items-center gap-3">
-                  <Terminal size={20} className="text-yellow-400" />
-                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
-                    {mode === 'review' ? 'INPUT SOURCE' : 'RECIPE PROMPT'}
-                  </span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="flex flex-col items-end gap-1 px-4 border-r border-zinc-800">
-                    <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-tighter">Heat Level</span>
+            <div className="absolute -inset-0.5 bg-gradient-to-br from-zinc-700 to-zinc-800 rounded-2xl opacity-20 group-focus-within:opacity-50 transition duration-500"></div>
+            <div className="relative bg-[#09090b] rounded-2xl border border-zinc-800 shadow-2xl flex flex-col overflow-hidden transition-colors group-focus-within:border-zinc-700">
+              
+              {/* Text Area */}
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder={mode === 'review' ? 'Paste your code here to get roasted...' : 'Tell me what to build, paste code to remix, or just chat...'}
+                className="w-full h-80 bg-transparent p-6 text-lg text-zinc-200 outline-none resize-none placeholder:text-zinc-600 leading-relaxed font-mono custom-scrollbar"
+                spellCheck="false"
+              />
+
+              {/* Bottom Toolbar */}
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-4 bg-zinc-900/60 border-t border-zinc-800/50 backdrop-blur-md">
+                
+                {/* Left Controls: Settings */}
+                <div className="flex items-center gap-4 w-full md:w-auto">
+                   {/* Persona Select */}
+                  <div className="relative group/select">
+                    <select 
+                      value={persona} 
+                      onChange={(e) => setPersona(e.target.value)}
+                      className="appearance-none bg-zinc-800 hover:bg-zinc-700 text-xs font-bold py-2.5 pl-4 pr-10 rounded-lg border border-zinc-700 outline-none focus:border-yellow-400 transition-colors cursor-pointer text-zinc-300 uppercase tracking-wider"
+                    >
+                      {personas.map(p => <option key={p} value={p}>{p.replace('_', ' ')}</option>)}
+                    </select>
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500 text-[10px]">▼</div>
+                  </div>
+
+                  {/* Spice Slider */}
+                  <div className="flex items-center gap-3 bg-zinc-800/50 px-4 py-2 rounded-lg border border-zinc-800 hover:border-zinc-700 transition-colors">
+                    <span className="text-[10px] font-bold text-zinc-500 uppercase">Spice</span>
                     <input 
                       type="range" min="1" max="5" step="1" 
                       value={spice} onChange={(e) => setSpice(parseInt(e.target.value))}
-                      className="w-24 h-1 accent-yellow-400 bg-zinc-800 rounded-lg appearance-none cursor-pointer"
-                      title={`Spice Level: ${spice}`}
+                      className="w-24 h-1.5 accent-yellow-400 bg-zinc-700 rounded-lg appearance-none cursor-pointer"
                     />
+                    <span className="text-xs font-bold text-yellow-400 w-3 text-center">{spice}</span>
                   </div>
-                  <select 
-                    value={persona} 
-                    onChange={(e) => setPersona(e.target.value)}
-                    className="bg-zinc-800 text-sm font-bold p-2 px-4 rounded-xl border border-zinc-700 outline-none focus:border-yellow-400 transition-colors cursor-pointer hover:bg-zinc-800/80"
-                  >
-                    {personas.map(p => <option key={p} value={p}>{p.replace('_', ' ').toUpperCase()}</option>)}
-                  </select>
                 </div>
-              </div>
-              
-              {/* Text Area */}
-              <div className="relative flex-1">
-                <textarea
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder={mode === 'review' ? 'Paste that nasty code here...' : 'Tell me what to build, paste code to remix, or just chat...'}
-                  className="w-full h-80 bg-transparent p-6 text-lg outline-none resize-none placeholder:text-zinc-700 leading-relaxed font-medium font-mono"
-                  spellCheck="false"
-                />
-                {input && (
-                  <button 
-                    onClick={() => setInput('')}
-                    className="absolute top-4 right-4 p-2 rounded-full bg-zinc-800 text-zinc-500 hover:text-white hover:bg-zinc-700 transition-all opacity-50 hover:opacity-100"
-                    title="Clear input"
-                  >
-                    <X size={16} />
-                  </button>
-                )}
-              </div>
 
-              {/* Action Bar */}
-              <div className="p-4 bg-zinc-900/50 flex justify-end border-t border-zinc-800">
+                {/* Right Controls: Action */}
                 <button 
                   onClick={handleSubmit}
                   disabled={loading || !input.trim()}
-                  className="bg-yellow-400 hover:bg-yellow-300 disabled:opacity-20 disabled:grayscale text-black font-black px-10 py-4 rounded-2xl flex items-center gap-3 transition-all active:scale-95 shadow-[0_0_30px_rgba(250,204,21,0.15)] group-hover:shadow-[0_0_40px_rgba(250,204,21,0.3)]"
+                  className="w-full md:w-auto bg-zinc-100 hover:bg-white text-black font-black px-8 py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50 disabled:grayscale shadow-lg shadow-white/5"
                 >
-                  {loading ? <RefreshCcw className="animate-spin" /> : <Send size={20} />}
-                  <span className="text-lg uppercase tracking-tight">{mode === 'review' ? 'Roast My Code' : 'Start Cooking'}</span>
+                  {loading ? <RefreshCcw size={18} className="animate-spin" /> : <Send size={18} />}
+                  <span className="text-sm uppercase tracking-tight">{mode === 'review' ? 'ROAST IT' : 'COOK IT'}</span>
                 </button>
               </div>
             </div>
