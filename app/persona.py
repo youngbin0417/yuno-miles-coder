@@ -254,7 +254,7 @@ def list_personas():
 
 def build_system_prompt(name: str) -> str:
     # Default to yuno_miles if persona not found
-    return PERSONAS.get(name, PERSONAS["yuno_miles"])
+    return PERSONAS.get(name, PERSONAS["Yuno_Miles"])
 
 def build_user_prompt(code: str, spice: int = 3) -> str:
     return f"""Explain & roast this code in the selected persona.
