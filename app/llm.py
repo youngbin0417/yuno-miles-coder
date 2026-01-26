@@ -38,6 +38,15 @@ def _compose_messages(system: str, user: str) -> Iterable[Dict[str, str]]:
     )
 
 
+def _redact_key(text: str) -> str:
+    """Strip API keys from text."""
+    for key_name in ["CLOUD_API_KEY", "LOCAL_API_KEY"]:
+        key_to_censor = os.getenv(key_name)
+        if key_to_censor:
+            text = text.replace(key_to_censor, f"[REDACTED_{key_name}]")
+    return text
+
+
 def chat(
     system: str,
     user: str,
@@ -52,7 +61,9 @@ def chat(
     key = api_key if api_key is not None else key_env
 
     if not model:
-        raise RuntimeError("LLM_MODEL is empty. Configure CLOUD_/LOCAL_ values in your .env.")
+        raise RuntimeError(
+            "LLM_MODEL is empty. Configure CLOUD_/LOCAL_ values in your .env."
+        )
 
     provider = _detect_provider(base)
     headers: Dict[str, str] = {"Content-Type": "application/json"}
@@ -73,7 +84,9 @@ def chat(
 
     else:  # OpenAI-compatible server (OpenAI, LM Studio, vLLM, etc.)
         if not key and base.startswith("https://"):
-            raise RuntimeError("LLM_API_KEY is required for hosted OpenAI-compatible endpoints.")
+            raise RuntimeError(
+                "LLM_API_KEY is required for hosted OpenAI-compatible endpoints."
+            )
         token = key or "local"
         headers["Authorization"] = f"Bearer {token}"
         url = f"{base.rstrip('/')}/chat/completions"
@@ -99,6 +112,6 @@ def chat(
         return data["choices"][0]["message"]["content"].strip()
 
     except requests.exceptions.RequestException as exc:
-        raise RuntimeError(f"API request failed: {exc}") from exc
+        raise RuntimeError(f"API request failed: {_redact_key(str(exc))}") from exc
     except (KeyError, IndexError, TypeError) as exc:
         raise RuntimeError(f"LLM response parse error: {data}") from exc
