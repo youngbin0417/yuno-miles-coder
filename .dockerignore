@@ -1,0 +1,29 @@
+# Git 관련 파일
+.git
+.gitignore
+
+# Python 캐시 및 컴파일 파일
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 프로젝트 빌드 및 배포 관련
+build/
+dist/
+*.egg-info/
+
+# 환경 변수 파일 (이미지에 포함하지 않도록 주의)
+.env
+*.env
+
+# 로그 파일
+*.log
+
+# 웹 프론트엔드 의존성
+web/node_modules
+
+# IDE 및 OS 특정 파일
+.idea/
+.vscode/
+.DS_Store
