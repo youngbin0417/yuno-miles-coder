@@ -40,10 +40,9 @@ def _compose_messages(system: str, user: str) -> Iterable[Dict[str, str]]:
 
 def _redact_key(text: str) -> str:
     """Strip API keys from text."""
-    for key_name in ["CLOUD_API_KEY", "LOCAL_API_KEY"]:
-        key_to_censor = os.getenv(key_name)
-        if key_to_censor:
-            text = text.replace(key_to_censor, f"[REDACTED_{key_name}]")
+    key_to_censor = os.getenv("CLOUD_API_KEY")
+    if key_to_censor:
+        text = text.replace(key_to_censor, "[REDACTED_CLOUD_KEY]")
     return text
 
 
