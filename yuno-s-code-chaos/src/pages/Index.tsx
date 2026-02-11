@@ -143,14 +143,31 @@ const Index = () => {
           }`}
         >
           <Send className="h-5 w-5" />
-          {mode === "roast" ? "🔥 ROAST IT 🔥" : "⚡ COOK IT ⚡"}
-          {submitCount > 0 && (
-            <span className="ml-2 text-xs opacity-60">({submitCount}x combo)</span>
+          {isLoading ? (
+            <span>Processing...</span>
+          ) : (
+            <>
+              {mode === "roast" ? "🔥 ROAST IT 🔥" : "⚡ COOK IT ⚡"}
+              {submitCount > 0 && (
+                <span className="ml-2 text-xs opacity-60">({submitCount}x combo)</span>
+              )}
+            </>
           )}
         </button>
 
         {/* Output */}
-        <OutputDisplay output={output} isLoading={isLoading} mode={mode} />
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground mb-4"></div>
+            <p className="text-lg font-bang text-muted-foreground">
+              {mode === "roast" 
+                ? "Roasting your code with chaotic energy... 🌶️" 
+                : "Cooking up something unhinged... 🍳"}
+            </p>
+          </div>
+        ) : (
+          <OutputDisplay output={output} isLoading={isLoading} mode={mode} />
+        )}
 
         {/* Random footer text */}
         <div className="mt-8 text-center">
