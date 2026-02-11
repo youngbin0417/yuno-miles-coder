@@ -25,26 +25,43 @@ const PersonaSelector = ({ persona, onPersonaChange }: PersonaSelectorProps) => 
         const data = await response.json();
         // Convert the persona names to a more user-friendly format
         const formattedPersonas = data.personas.map((p: string) => {
-          // Convert snake_case or camelCase to proper names
+          // Convert snake_case or camelCase to proper names and add specific emojis
           const displayName = p
             .replace(/_/g, ' ')  // Replace underscores with spaces
             .replace(/\b\w/g, l => l.toUpperCase())  // Capitalize first letter of each word
-            .replace('Yuno Miles', '🗣️ Yuno Miles')  // Special cases with emojis
-            .replace('Chaotic Microblog', '📱 Chaotic Microblog')
-            .replace('Kanye West', '🐻 Kanye Twitter')
-            .replace('Mrbeast', '💰 MrBeast')
-            .replace('Ishowspeed', '🏃‍♂️ iShowSpeed')
-            .replace('Gordon Ramsay', '👨‍🍳 Gordon Ramsay')
+            // Specific emoji mappings for each persona
+            .replace('Adolf Hitler', '🗣️ Adolf Hitler')
+            .replace('Arsenal Fan', '💀 Arsenal Fan')
+            .replace('Benjamin Netanyahu', '🤹‍♂️ Benjamin Netanyahu')
+            .replace('Charlie Kirk', '🧑‍🎤 Charlie Kirk')
+            .replace('Cristiano Ronaldo', '7️⃣ Cristiano Ronaldo')
+            .replace('DonaldTrump', '🟠 Donald Trump')
+            .replace('Druski', '👶🏾 Druski')
+            .replace('Emmanuel Macron', '👨‍🍳 Emmanuel Macron')
             .replace('Elon Musk', '🚀 Elon Musk')
-            .replace('DonaldTrump', '🇺🇸 Donald Trump')
-            .replace('Joe Biden', '🏛️ Joe Biden')
+            .replace('Gordon Ramsay', '👨‍🍳 Gordon Ramsay')
             .replace('Homer Simpson', '🍩 Homer Simpson')
-            .replace('Rick Sanchez', '🧪 Rick Sanchez');
+            .replace('Joe Biden', '🏛️ Joe Biden')
+            .replace('Kanye West', '🐻 Kanye West')
+            .replace('Rick Sanchez', '🧪 Rick Sanchez')
+            .replace('Yuno Miles', '🐸 Yuno Miles')
+            .replace('Chaotic Microblog', '📱 Chaotic Microblog')
+            .replace('Mrbeast', '💵 MrBeast')  // Dollar sign for MrBeast
+            .replace('Ishowspeed', '📺 iShowSpeed')  // TV/Stream emoji for iShowSpeed
+            .replace('Keir Starmer', '🤡 Keir Starmer')
+            .replace('Lgbtq Activist', '🤓 LGBTQ Activist')  // nerd for LGBTQ Activist
+            .replace('Kai Cenat', '🦱 Kai Cenat')
+            .replace('Mark Zuckerberg', '🦎 Mark Zuckerberg')
+            .replace('Timothée Chalamet', '💇‍♂️ Timothée Chalamet')  // haircut/hairstyle for Timothée (hi-job reference)
+            .replace('Tyler The Creator', '🎤 Tyler The Creator')
+            .replace('Vladimir Putin', '🎖️ Vladimir Putin')
+            .replace('Playboi Carti', '🧛 Playboi Carti')
+            .replace('Donald Trump', '🟠 Donald Trump');  // Orange for Trump
           
           return {
             id: p,
-            name: displayName,
-            desc: "Chaotic personality for code reviews"
+            name: displayName
+            // Removed desc to only show names in the dropdown
           };
         });
         setPersonas(formattedPersonas);
@@ -56,9 +73,9 @@ const PersonaSelector = ({ persona, onPersonaChange }: PersonaSelectorProps) => 
         console.error("Failed to fetch personas:", error);
         // Fallback to default personas if API call fails
         setPersonas([
-          { id: "yuno_miles", name: "🗣️ Yuno Miles", desc: "no cap fr fr" },
-          { id: "chaotic_microblog", name: "📱 Chaotic Microblog", desc: "ratio + L + cope" },
-          { id: "kanye_west", name: "🐻 Kanye Twitter", desc: "I AM THE CODE" },
+          { id: "yuno_miles", name: "🗣️ Yuno Miles" },
+          { id: "chaotic_microblog", name: "📱 Chaotic Microblog" },
+          { id: "kanye_west", name: "🐻 Kanye Twitter" },
         ]);
       } finally {
         setLoading(false);
@@ -68,7 +85,7 @@ const PersonaSelector = ({ persona, onPersonaChange }: PersonaSelectorProps) => 
     fetchPersonas();
   }, [onPersonaChange, persona]);
 
-  const selected = personas.find((p) => p.id === persona) || personas[0] || { id: persona, name: persona, desc: "Current persona" };
+  const selected = personas.find((p) => p.id === persona) || personas[0] || { id: persona, name: persona };
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -82,21 +99,21 @@ const PersonaSelector = ({ persona, onPersonaChange }: PersonaSelectorProps) => 
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="chaos-btn flex items-center gap-2 bg-card px-4 py-2 text-sm font-bold"
+        className="chaos-btn flex items-center gap-2 bg-card px-4 py-2 text-sm font-bold min-w-[200px]"
         disabled={loading}
       >
         {loading ? (
           <span>Loading personas...</span>
         ) : (
           <>
-            <span>{selected.name}</span>
+            <span className="truncate">{selected.name}</span>
             <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
           </>
         )}
       </button>
 
       {open && !loading && (
-        <div className="absolute left-0 top-full z-50 mt-2 w-64 max-h-60 overflow-y-auto chaos-border bg-card">
+        <div className="absolute left-0 top-full z-50 mt-2 w-80 max-h-60 overflow-y-auto chaos-border bg-card">
           {personas.map((p) => (
             <button
               key={p.id}
@@ -106,7 +123,6 @@ const PersonaSelector = ({ persona, onPersonaChange }: PersonaSelectorProps) => 
               }`}
             >
               <span className="truncate">{p.name}</span>
-              {p.desc && <span className="ml-auto text-xs opacity-60 truncate">{p.desc}</span>}
             </button>
           ))}
         </div>

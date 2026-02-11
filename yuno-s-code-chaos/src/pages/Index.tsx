@@ -93,7 +93,7 @@ const Index = () => {
       <header className="px-6 pt-8 pb-4">
         <div className="mx-auto max-w-4xl">
           <div className="flex items-start gap-4">
-            <span className="text-5xl wiggle inline-block">🗿</span>
+            <span className="text-5xl wiggle inline-block">🥷</span>
             <div>
               <h1 className="title-chaos text-4xl md:text-5xl text-foreground leading-tight">
                 YN CODER
@@ -126,7 +126,7 @@ const Index = () => {
             onChange={setCode}
             placeholder={
               mode === "roast"
-                ? "// Paste your code here 😈\nfunction hello() {\n  console.log('bruh');\n}"
+                ? "// Paste your code and hit ROAST 😈\nfunction hello() {\n  console.log('bruh');\n}"
                 : "// Describe what you want to create\n// e.g. fizzbuzz but make it absolutely unhinged"
             }
           />
