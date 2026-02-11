@@ -55,7 +55,7 @@ const Index = () => {
       setOutput(data.result || "bro the AI said nothing 💀");
     } catch {
       setOutput(
-        "⚠️ 서버 연결 안됨 ㅋㅋ 백엔드 켰어??\n\n```bash\npython -m app.server\n```\n\n그거 안 키면 아무것도 안 됨 bruh 💀"
+        "⚠️ Server connection failed 😭 Is the backend running??\n\n```bash\npython -m app.server\n```\n\nNothing works without it bruh 💀"
       );
     } finally {
       setIsLoading(false);
@@ -126,8 +126,8 @@ const Index = () => {
             onChange={setCode}
             placeholder={
               mode === "roast"
-                ? "// 여기에 코드 붙여넣기 ㅋㅋ\nfunction hello() {\n  console.log('bruh');\n}"
-                : "// 뭐 만들고 싶은지 적어\n// e.g. fizzbuzz but make it absolutely unhinged"
+                ? "// Paste your code here 😈\nfunction hello() {\n  console.log('bruh');\n}"
+                : "// Describe what you want to create\n// e.g. fizzbuzz but make it absolutely unhinged"
             }
           />
         </div>
