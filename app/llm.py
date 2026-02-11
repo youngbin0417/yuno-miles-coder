@@ -2,6 +2,10 @@ import os
 from typing import Any, Dict, Iterable, Optional
 
 import requests
+from dotenv import load_dotenv
+from openai import OpenAI
+
+load_dotenv() # Load environment variables at the start
 
 DEFAULT_BASE = "https://api.openai.com/v1"
 
@@ -54,24 +58,36 @@ def chat(
     model: Optional[str] = None,
     api_key: Optional[str] = None,
 ) -> str:
-    base = base_url or os.getenv("LLM_BASE_URL") or DEFAULT_BASE
-    model = model or os.getenv("LLM_MODEL") or ""
-    key_env = os.getenv("LLM_API_KEY", "")
+    base = base_url or os.getenv("CLOUD_BASE_URL") or DEFAULT_BASE
+    model = model or os.getenv("CLOUD_MODEL") or ""
+    key_env = os.getenv("CLOUD_API_KEY", "")
     key = api_key if api_key is not None else key_env
 
     if not model:
         raise RuntimeError(
-            "LLM_MODEL is empty. Configure CLOUD_/LOCAL_ values in your .env."
+            "CLOUD_MODEL is empty. Configure CLOUD_/LOCAL_ values in your .env."
         )
 
     provider = _detect_provider(base)
     headers: Dict[str, str] = {"Content-Type": "application/json"}
-
+    
     if provider == "gemini":
         if not key:
             raise RuntimeError("CLOUD_API_KEY (Gemini key) is empty.")
         url = f"{base.rstrip('/')}/models/{model}:generateContent?key={key}"
         payload = _convert_to_gemini_format(system, user)
+        try:
+            response = requests.post(url, headers=headers, json=payload, timeout=120)
+            response.raise_for_status()
+            data = response.json()
+            return (
+                data["candidates"][0]["content"]["parts"][0]["text"]
+                .strip()
+            )
+        except requests.exceptions.RequestException as exc:
+            raise RuntimeError(f"Gemini API request failed: {_redact_key(str(exc))}") from exc
+        except (KeyError, IndexError, TypeError) as exc:
+            raise RuntimeError(f"Gemini response parse error: {data}") from exc
 
     elif provider == "ollama":
         url = f"{base.rstrip('/')}/api/generate"
@@ -80,37 +96,38 @@ def chat(
             "prompt": f"{system}\n\n{user}",
             "stream": False,
         }
+        try:
+            response = requests.post(url, headers=headers, json=payload, timeout=120)
+            response.raise_for_status()
+            data = response.json()
+            return data.get("response", "").strip()
+        except requests.exceptions.RequestException as exc:
+            raise RuntimeError(f"Ollama API request failed: {_redact_key(str(exc))}") from exc
+        except (KeyError, IndexError, TypeError) as exc:
+            raise RuntimeError(f"Ollama response parse error: {data}") from exc
 
-    else:  # OpenAI-compatible server (OpenAI, LM Studio, vLLM, etc.)
+    else:  # OpenAI-compatible server (OpenAI, LM Studio, vLLM, OpenRouter etc.)
         if not key and base.startswith("https://"):
             raise RuntimeError(
-                "LLM_API_KEY is required for hosted OpenAI-compatible endpoints."
+                "CLOUD_API_KEY is required for hosted OpenAI-compatible endpoints."
             )
-        token = key or "local"
-        headers["Authorization"] = f"Bearer {token}"
-        url = f"{base.rstrip('/')}/chat/completions"
-        payload = {
-            "model": model,
-            "messages": list(_compose_messages(system, user)),
-            "temperature": 0.8,
-            "max_tokens": 800,
-        }
-
-    try:
-        response = requests.post(url, headers=headers, json=payload, timeout=120)
-        response.raise_for_status()
-        data = response.json()
-
-        if provider == "gemini":
-            return (
-                data["candidates"][0]["content"]["parts"][0]["text"]
-                .strip()
+        try:
+            client = OpenAI(
+                base_url=base.rstrip('/'),
+                api_key=key or "local" # Use 'local' as key if not provided for local servers
             )
-        if provider == "ollama":
-            return data.get("response", "").strip()
-        return data["choices"][0]["message"]["content"].strip()
-
-    except requests.exceptions.RequestException as exc:
-        raise RuntimeError(f"API request failed: {_redact_key(str(exc))}") from exc
-    except (KeyError, IndexError, TypeError) as exc:
-        raise RuntimeError(f"LLM response parse error: {data}") from exc
+            
+            messages = list(_compose_messages(system, user))
+            
+            llm_response = client.chat.completions.create( # Renamed to avoid clash with 'response' from requests
+                model=model,
+                messages=messages,
+                temperature=0.8,
+                max_tokens=800,
+                # extra_body={"reasoning": {"enabled": True}} # Uncomment if reasoning is needed for OpenRouter
+            )
+            return llm_response.choices[0].message.content.strip()
+        except Exception as exc: # Catch general exceptions from openai library
+            # Attempt to redact key if present in error message
+            error_message = _redact_key(str(exc))
+            raise RuntimeError(f"OpenAI-compatible client API request failed: {error_message}") from exc

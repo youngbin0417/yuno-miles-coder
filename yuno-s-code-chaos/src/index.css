@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Bangers&family=Bungee+Shade&display=swap');
+
+@layer base {
+  :root {
+    --background: 60 5% 96%;
+    --foreground: 0 0% 5%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 5%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 5%;
+
+    --primary: 54 100% 50%;
+    --primary-foreground: 0 0% 5%;
+
+    --secondary: 120 60% 40%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 60 5% 90%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 0 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 75%;
+    --input: 0 0% 80%;
+    --ring: 54 100% 50%;
+
+    --radius: 0px;
+
+    --chaos-pink: 330 100% 60%;
+    --chaos-cyan: 180 100% 50%;
+    --chaos-orange: 30 100% 55%;
+    --chaos-purple: 270 100% 60%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'JetBrains Mono', monospace;
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><text y='28' font-size='28'>💀</text></svg>"), auto;
+  }
+}
+
+@layer components {
+  .title-chaos {
+    font-family: 'Bungee Shade', cursive;
+    text-shadow: 3px 3px 0 hsl(var(--accent)),
+                 -1px -1px 0 hsl(var(--chaos-cyan)),
+                 4px 4px 0 hsl(var(--chaos-purple));
+  }
+
+  .title-sub {
+    font-family: 'Bangers', cursive;
+    letter-spacing: 0.1em;
+  }
+
+  .chaos-border {
+    border: 3px solid hsl(var(--foreground));
+    box-shadow: 4px 4px 0 hsl(var(--foreground));
+  }
+
+  .chaos-border-primary {
+    border: 3px solid hsl(var(--primary));
+    box-shadow: 4px 4px 0 hsl(var(--primary));
+  }
+
+  .chaos-border-accent {
+    border: 3px solid hsl(var(--accent));
+    box-shadow: 4px 4px 0 hsl(var(--accent));
+  }
+
+  .chaos-border-green {
+    border: 3px solid hsl(var(--secondary));
+    box-shadow: 4px 4px 0 hsl(var(--secondary));
+  }
+
+  .chaos-btn {
+    @apply font-bold uppercase tracking-wider;
+    border: 3px solid hsl(var(--foreground));
+    box-shadow: 4px 4px 0 hsl(var(--foreground));
+    transition: all 0.1s;
+  }
+
+  .chaos-btn:hover {
+    box-shadow: 2px 2px 0 hsl(var(--foreground));
+    transform: translate(2px, 2px);
+  }
+
+  .chaos-btn:active {
+    box-shadow: 0px 0px 0 hsl(var(--foreground));
+    transform: translate(4px, 4px);
+  }
+
+  .shake-hover:hover {
+    animation: shake 0.3s infinite;
+  }
+
+  .wiggle {
+    animation: wiggle 2s ease-in-out infinite;
+  }
+
+  .spin-slow {
+    animation: spin 3s linear infinite;
+  }
+
+  .bounce-chaos {
+    animation: bounce-chaos 0.5s ease infinite;
+  }
+
+  .marquee {
+    animation: marquee 15s linear infinite;
+  }
+
+  .rainbow-text {
+    background: linear-gradient(90deg, 
+      hsl(0 100% 50%), 
+      hsl(30 100% 50%), 
+      hsl(54 100% 50%), 
+      hsl(120 100% 40%), 
+      hsl(180 100% 50%), 
+      hsl(270 100% 60%), 
+      hsl(330 100% 60%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: rainbow-shift 3s linear infinite;
+  }
+
+  .output-prose {
+    @apply text-foreground leading-relaxed;
+  }
+
+  .output-prose h1, .output-prose h2, .output-prose h3 {
+    font-family: 'Bangers', cursive;
+    @apply text-foreground mt-4 mb-2 text-xl;
+  }
+
+  .output-prose p {
+    @apply mb-3;
+  }
+
+  .output-prose code {
+    @apply bg-muted px-1.5 py-0.5 text-sm;
+    border: 1px solid hsl(var(--border));
+  }
+
+  .output-prose pre {
+    @apply bg-muted p-4 my-4 overflow-x-auto;
+    border: 2px solid hsl(var(--foreground));
+  }
+
+  .output-prose pre code {
+    @apply bg-transparent p-0 border-0;
+  }
+
+  .output-prose ul, .output-prose ol {
+    @apply ml-6 mb-3;
+  }
+
+  .output-prose li {
+    @apply mb-1;
+  }
+
+  .output-prose blockquote {
+    @apply border-l-4 border-foreground pl-4 italic my-4;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translate(0); }
+  25% { transform: translate(-3px, 2px) rotate(-1deg); }
+  50% { transform: translate(2px, -2px) rotate(1deg); }
+  75% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(3deg); }
+  75% { transform: rotate(-3deg); }
+}
+
+@keyframes bounce-chaos {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes rainbow-shift {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes float-emoji {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-200px) rotate(720deg); opacity: 0; }
+}
