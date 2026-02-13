@@ -17,46 +17,15 @@ HELLO WORLD? NAH, HELLO UNIVERSE 🚀🚀🚀
 
 ## 🚀 GETTING STARTED
 
-Choose your flavor: **Local Chaos** (Ollama + React Dev) or **Cloud Production** (Docker + Nginx).
+### 🏠 Local Development
+1.  **Backend**: `pip install -r requirements.txt` -> `python -m app.server`
+2.  **Frontend**: `cd yuno-s-code-chaos` -> `npm install` -> `npm run dev`
+3.  **Local Model**: Ensure [Ollama](https://ollama.com/) is running.
 
-### 🏠 Option A: Local Development (Ollama)
-Best for running locally with your own GPU/models.
-
-1.  **Backend Setup**:
-    ```bash
-    pip install -r requirements.txt
-    cp .env.example .env
-    # Set MODE=hybrid or MODE=local in .env
-    python -m app.server
-    ```
-2.  **Frontend Setup**:
-    ```bash
-    cd yuno-s-code-chaos
-    npm install
-    npm run dev
-    ```
-3.  **Local Model**: Make sure [Ollama](https://ollama.com/) is running on port `11434`.
-
----
-
-### ☁️ Option B: Cloud Deployment (AWS EC2 / Docker)
-**RECOMMENDED** for production. Uses Docker + Nginx proxy and cloud-only mode for stability.
-
-1.  **Clone & Configure**:
-    ```bash
-    git clone <your-repo-url>
-    cd troll-coder
-    cp .env.example .env
-    ```
-2.  **Force Cloud Mode**:
-    Edit `.env` and set:
-    *   `MODE=cloud` (Ollama usually isn't available on EC2)
-    *   `CLOUD_API_KEY=your_gemini_key`
-3.  **Deploy**:
-    ```bash
-    docker-compose up -d --build
-    ```
-    *Access via `http://your-ec2-ip` (Standard HTTP port 80).*
+### ☁️ Cloud Deployment (Docker)
+1.  **Configure**: `cp .env.example .env` (Set `MODE=cloud` & `CLOUD_API_KEY`)
+2.  **Run**: `docker-compose up -d --build`
+3.  **Access**: `http://<ec2-ip>` (Port 80)
 
 ---
 
