@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ymc-backend
+    environment:
+      - MODE=cloud # Default to cloud if no local model on EC2
+      # Add other env vars here or use .env file
+    env_file:
+      - .env
+    expose:
+      - "8000"
+    restart: always
+
+  frontend:
+    build:
+      context: ./yuno-s-code-chaos
+      dockerfile: Dockerfile
+    container_name: ymc-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always

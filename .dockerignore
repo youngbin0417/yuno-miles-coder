@@ -20,8 +20,10 @@ dist/
 # 로그 파일
 *.log
 
-# 웹 프론트엔드 의존성
+# Web Frontend
 web/node_modules
+yuno-s-code-chaos/node_modules
+yuno-s-code-chaos/dist
 
 # IDE 및 OS 특정 파일
 .idea/

@@ -15,90 +15,56 @@ HELLO WORLD? NAH, HELLO UNIVERSE 🚀🚀🚀
 
 ---
 
-## SETUP
+## 🚀 GETTING STARTED
 
-### Prerequisites
-- Python 3.8+
-- Node.js 18+ (for the new frontend)
-- Ollama running locally (port 11434) for local model inference
+Choose your flavor: **Local Chaos** (Ollama + React Dev) or **Cloud Production** (Docker + Nginx).
 
-### Environment Configuration
-COPY `.env.example` to `.env` and fill it out. The app is configured entirely by environment variables.
+### 🏠 Option A: Local Development (Ollama)
+Best for running locally with your own GPU/models.
 
-- **Hybrid Mode (Default):**
-  - `CLOUD_API_KEY`: Your Gemini API key.
-  - `CLOUD_MODEL`: The Gemini model to use (e.g., `gemini-1.5-flash`).
-  - `LOCAL_BASE_URL`: The base URL for your local Ollama API (e.g., `http://127.0.0.1:11434`).
-  - `LOCAL_MODEL`: The local model name (e.g., `qwen2:7b`).
-
-The app also supports `local`-only and `cloud`-only modes via the `MODE` environment variable. See `.env.example` for all options.
-
----
-
-## RUNNING THE APPLICATION
-
-### Option 1: Backend + Integrated Frontend (Recommended)
-1. **Install backend dependencies:**
-   ```sh
-   pip install -r requirements.txt
-   ```
-
-2. **Build the new frontend:**
-   ```sh
-   cd yuno-s-code-chaos
-   npm install
-   npm run build
-   cd ..
-   ```
-
-3. **Run the backend server (serves both API and frontend):**
-   ```sh
-   python -m app.server
-   ```
-   
-   The application will be available at `http://localhost:8000`
-
-### Option 2: Backend Only (for development)
-1. **Run the backend API only:**
-   ```sh
-   python -m app.server
-   ```
-   
-   API endpoints will be available at `http://localhost:8000/api/*`
-
-### Option 3: Frontend Development Mode
-1. **Run the backend API separately:**
-   ```sh
-   python -m app.server
-   ```
-
-2. **Run the frontend in development mode:**
-   ```sh
-   cd yuno-s-code-chaos
-   npm install
-   npm run dev
-   ```
-   
-   The frontend will be available at `http://localhost:8080` and will connect to the backend at `http://localhost:8000`
+1.  **Backend Setup**:
+    ```bash
+    pip install -r requirements.txt
+    cp .env.example .env
+    # Set MODE=hybrid or MODE=local in .env
+    python -m app.server
+    ```
+2.  **Frontend Setup**:
+    ```bash
+    cd yuno-s-code-chaos
+    npm install
+    npm run dev
+    ```
+3.  **Local Model**: Make sure [Ollama](https://ollama.com/) is running on port `11434`.
 
 ---
 
-## BUILDING FOR PRODUCTION
+### ☁️ Option B: Cloud Deployment (AWS EC2 / Docker)
+**RECOMMENDED** for production. Uses Docker + Nginx proxy and cloud-only mode for stability.
 
-### Building the Full Application
-1. **Build the frontend:**
-   ```sh
-   cd yuno-s-code-chaos
-   npm install
-   npm run build
-   ```
+1.  **Clone & Configure**:
+    ```bash
+    git clone <your-repo-url>
+    cd troll-coder
+    cp .env.example .env
+    ```
+2.  **Force Cloud Mode**:
+    Edit `.env` and set:
+    *   `MODE=cloud` (Ollama usually isn't available on EC2)
+    *   `CLOUD_API_KEY=your_gemini_key`
+3.  **Deploy**:
+    ```bash
+    docker-compose up -d --build
+    ```
+    *Access via `http://your-ec2-ip` (Standard HTTP port 80).*
 
-2. **Run the integrated server:**
-   ```sh
-   python -m app.server
-   ```
+---
 
-The built frontend will be automatically served by the backend at `http://localhost:8000`.
+## 🛠 ARCHITECTURE
+The production setup uses **Nginx** as a reverse proxy:
+- `http://<ip>/` -> Serves React Static Files 🖼️
+- `http://<ip>/api/*` -> Proxies to FastAPI Backend (Internal Port 8000) ⚙️
+- `http://<ip>/health` -> Backend Health Check ✅
 
 ---
 

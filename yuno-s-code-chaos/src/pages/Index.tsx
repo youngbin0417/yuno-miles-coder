@@ -6,7 +6,7 @@ import SpiceSlider from "@/components/SpiceSlider";
 import CodeEditor from "@/components/CodeEditor";
 import OutputDisplay from "@/components/OutputDisplay";
 
-const API_BASE = "http://localhost:8000";
+const API_BASE = "";
 
 const RANDOM_FOOTERS = [
   "WHO LET PYTHON COOK?? 🍔🍔🔧",
@@ -84,7 +84,7 @@ const Index = () => {
       {/* Marquee banner */}
       <div className="overflow-hidden border-b-2 border-foreground bg-primary py-1">
         <div className="marquee whitespace-nowrap font-bang text-sm text-primary-foreground">
-          🔥 YUNO MILES CODER 🔥 NO CODE IS SAFE 💀 ROAST OR GET ROASTED 🍳 WHO LET THIS MF COOK 🔧 SPAGHETTI CODE DETECTOR 🍝 BUG FACTORY INSPECTOR 🐛 CTRL+C CTRL+V CHAMPION 🏆 
+          🔥 YUNO MILES CODER 🔥 NO CODE IS SAFE 💀 ROAST OR GET ROASTED 🍳 WHO LET THIS MF COOK 🔧 SPAGHETTI CODE DETECTOR 🍝 BUG FACTORY INSPECTOR 🐛 CTRL+C CTRL+V CHAMPION 🏆
           🔥 YUNO MILES CODER 🔥 NO CODE IS SAFE 💀 ROAST OR GET ROASTED 🍳 WHO LET THIS MF COOK 🔧 SPAGHETTI CODE DETECTOR 🍝 BUG FACTORY INSPECTOR 🐛 CTRL+C CTRL+V CHAMPION 🏆
         </div>
       </div>
@@ -136,11 +136,10 @@ const Index = () => {
         <button
           onClick={handleSubmit}
           disabled={isLoading || !code.trim()}
-          className={`chaos-btn shake-hover mb-8 flex w-full items-center justify-center gap-3 px-8 py-4 text-xl font-bang tracking-widest disabled:opacity-30 disabled:pointer-events-none ${
-            mode === "roast"
+          className={`chaos-btn shake-hover mb-8 flex w-full items-center justify-center gap-3 px-8 py-4 text-xl font-bang tracking-widest disabled:opacity-30 disabled:pointer-events-none ${mode === "roast"
               ? "bg-primary text-primary-foreground chaos-border-primary"
               : "bg-secondary text-secondary-foreground chaos-border-green"
-          }`}
+            }`}
         >
           <Send className="h-5 w-5" />
           {isLoading ? (
@@ -160,8 +159,8 @@ const Index = () => {
           <div className="flex flex-col items-center justify-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-foreground mb-4"></div>
             <p className="text-lg font-bang text-muted-foreground">
-              {mode === "roast" 
-                ? "Roasting your code with chaotic energy... 🌶️" 
+              {mode === "roast"
+                ? "Roasting your code with chaotic energy... 🌶️"
                 : "Cooking up something unhinged... 🍳"}
             </p>
           </div>
@@ -178,7 +177,7 @@ const Index = () => {
       {/* Bottom marquee */}
       <div className="fixed bottom-0 left-0 right-0 overflow-hidden border-t-2 border-foreground bg-foreground py-1">
         <div className="marquee whitespace-nowrap font-bang text-sm text-background" style={{ animationDirection: "reverse" }}>
-          💀 BUILT DIFFERENT 💀 YUNO MILES APPROVED 🏆 STACK OVERFLOW IS CRYING RN 😭 YOUR CODE NEEDS THERAPY 🧠 GIT COMMIT -M "I GIVE UP" 📦 
+          💀 BUILT DIFFERENT 💀 YUNO MILES APPROVED 🏆 STACK OVERFLOW IS CRYING RN 😭 YOUR CODE NEEDS THERAPY 🧠 GIT COMMIT -M "I GIVE UP" 📦
           💀 BUILT DIFFERENT 💀 YUNO MILES APPROVED 🏆 STACK OVERFLOW IS CRYING RN 😭 YOUR CODE NEEDS THERAPY 🧠 GIT COMMIT -M "I GIVE UP" 📦
         </div>
       </div>
