@@ -55,7 +55,7 @@ const Index = () => {
       setOutput(data.result || "bro the AI said nothing 💀");
     } catch {
       setOutput(
-        "⚠️ Server connection failed 😭 Is the backend running??\n\n```bash\npython -m app.server\n```\n\nNothing works without it bruh 💀"
+        "⚠️ Server connection failed 😭 Is the backend running??\n\n```bash\ncd backend && python -m app.server\n```\n\nNothing works without it bruh 💀"
       );
     } finally {
       setIsLoading(false);
@@ -137,8 +137,8 @@ const Index = () => {
           onClick={handleSubmit}
           disabled={isLoading || !code.trim()}
           className={`chaos-btn shake-hover mb-8 flex w-full items-center justify-center gap-3 px-8 py-4 text-xl font-bang tracking-widest disabled:opacity-30 disabled:pointer-events-none ${mode === "roast"
-              ? "bg-primary text-primary-foreground chaos-border-primary"
-              : "bg-secondary text-secondary-foreground chaos-border-green"
+            ? "bg-primary text-primary-foreground chaos-border-primary"
+            : "bg-secondary text-secondary-foreground chaos-border-green"
             }`}
         >
           <Send className="h-5 w-5" />

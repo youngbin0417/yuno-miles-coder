@@ -72,7 +72,7 @@ def health_check():
     return {"status": "ok", "mode": os.getenv("MODE", "hybrid")}
 
 # Serve static files from the built frontend - this must come AFTER all API routes
-frontend_path = Path(__file__).parent.parent / "yuno-s-code-chaos"
+frontend_path = Path(__file__).parent.parent.parent / "yuno-s-code-chaos"
 dist_path = frontend_path / "dist"
 
 if dist_path.exists():
