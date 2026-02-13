@@ -33,8 +33,8 @@ const OutputDisplay = ({ output, isLoading, mode }: OutputDisplayProps) => {
         <span className="mb-2 text-5xl wiggle inline-block">🤔</span>
         <p className="font-bang text-lg text-muted-foreground">
           {mode === "roast"
-            ? "코드 넣고 ROAST 눌러 ㅋㅋ"
-            : "뭐 만들지 알려줘 ㅋㅋ"}
+            ? "press roast after putting code innit lol"
+            : "Let me know what u wanna make lol"}
         </p>
         <p className="mt-1 text-xs text-muted-foreground">no code is safe 💀</p>
       </div>
