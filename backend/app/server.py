@@ -53,6 +53,9 @@ def review_code(req: ReviewRequest):
         )
         return {"result": result}
     except Exception as e:
+        print(f"ERROR: {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/generate")
@@ -65,6 +68,9 @@ def generate_code(req: GenerateRequest):
         )
         return {"result": result}
     except Exception as e:
+        print(f"ERROR: {str(e)}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/health")
