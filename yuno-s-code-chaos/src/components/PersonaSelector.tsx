@@ -17,11 +17,11 @@ const PersonaSelector = ({ persona, onPersonaChange }: PersonaSelectorProps) => 
   const [personas, setPersonas] = useState<Persona[]>([]);
   const [loading, setLoading] = useState(true);
   const ref = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const fetchPersonas = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/personas");
+        const response = await fetch("/api/personas");
         const data = await response.json();
         // Convert the persona names to a more user-friendly format
         const formattedPersonas = data.personas.map((p: string) => {
@@ -57,7 +57,7 @@ const PersonaSelector = ({ persona, onPersonaChange }: PersonaSelectorProps) => 
             .replace('Vladimir Putin', '🎖️ Vladimir Putin')
             .replace('Playboi Carti', '🧛 Playboi Carti')
             .replace('Donald Trump', '🟠 Donald Trump');  // Orange for Trump
-          
+
           return {
             id: p,
             name: displayName
@@ -118,9 +118,8 @@ const PersonaSelector = ({ persona, onPersonaChange }: PersonaSelectorProps) => 
             <button
               key={p.id}
               onClick={() => { onPersonaChange(p.id); setOpen(false); }}
-              className={`flex w-full items-center gap-2 px-4 py-3 text-left text-sm font-bold transition-colors hover:bg-primary hover:text-primary-foreground ${
-                persona === p.id ? "bg-primary text-primary-foreground" : ""
-              }`}
+              className={`flex w-full items-center gap-2 px-4 py-3 text-left text-sm font-bold transition-colors hover:bg-primary hover:text-primary-foreground ${persona === p.id ? "bg-primary text-primary-foreground" : ""
+                }`}
             >
               <span className="truncate">{p.name}</span>
             </button>
