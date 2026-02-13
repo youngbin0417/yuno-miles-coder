@@ -2,13 +2,13 @@ version: '3.8'
 
 services:
   backend:
+    image: ${DOCKER_USER:-bin0417}/ymc-backend:latest
     build:
-      context: .
+      context: ./backend
       dockerfile: Dockerfile
     container_name: ymc-backend
     environment:
-      - MODE=cloud # Default to cloud if no local model on EC2
-      # Add other env vars here or use .env file
+      - MODE=cloud
     env_file:
       - .env
     expose:
@@ -16,6 +16,7 @@ services:
     restart: always
 
   frontend:
+    image: ${DOCKER_USER:-bin0417}/ymc-frontend:latest
     build:
       context: ./yuno-s-code-chaos
       dockerfile: Dockerfile
