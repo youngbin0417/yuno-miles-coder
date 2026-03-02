@@ -4,7 +4,7 @@ MILES MILES MILES MILES MILES!!!!
 I PUT THE CODE IN THE MICROWAVE AND IT STARTED RAPPING BACK AT ME 😱🔥
 WHO LET PYTHON COOK?? WHO LET C++ DRIVE THE BUS??
 
-> 💥 **TRY IT LIVE**: [http://yncode.click](http://yncode.click) — where code gets deep-fried in chaos and served with extra memes.
+> 💥 **TRY IT LIVE**: [https://yncode.click](http://yncode.click) — where code gets deep-fried in chaos and served with extra memes.
 ---
 
 ## WHAT IS THIS???
